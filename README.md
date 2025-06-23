@@ -1,19 +1,19 @@
-# petaniku development v0.1
+# Petaniku development v0.1
 
-# backend thech stack#
+## backend thech stack
 
 - Node.js + express
 - lib ada di package.json backend
 - deployment pm2, men autostart + logs tersusun
 
-# db
+## db
 
 - postgres
 - docker
 - ecs alibaba (cloud)
 - container postgres
 
-# frontend
+## frontend
 
 - react
 - tailwind
