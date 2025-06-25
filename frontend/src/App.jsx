@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.jsx
+import { Outlet } from 'react-router-dom';
+import Navbar from './components/Navbar';
+// 1. Import komponen Notifikasi
+import Notification from './components/Notification';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // Div terluar ini membungkus seluruh aplikasi.
+    // 'min-h-screen' memastikan latar belakang memenuhi seluruh tinggi layar.
+    <div className="min-h-screen">
+      <Navbar />
+      <main>
+        {/* Outlet adalah tempat di mana semua halaman Anda (HomePage, ProductsPage, dll.) akan ditampilkan */}
+        <Outlet />
+      </main>
+      
+      {/* 2. Letakkan komponen Notifikasi di sini */}
+      {/* Posisinya di luar <main> agar bisa "melayang" di atas segalanya */}
+      {/* dengan posisi 'fixed' yang kita atur di dalam komponennya. */}
+      <Notification />
+    </div>
+  );
 }
 
-export default App
+export default App;
