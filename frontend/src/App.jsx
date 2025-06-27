@@ -1,8 +1,8 @@
 // src/App.jsx
-import { Outlet } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/Navbar";
 // 1. Import komponen Notifikasi
-import Notification from './components/Notification';
+import Notification from "./components/Notification";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         {/* Outlet adalah tempat di mana semua halaman Anda (HomePage, ProductsPage, dll.) akan ditampilkan */}
         <Outlet />
       </main>
-      
+
       {/* 2. Letakkan komponen Notifikasi di sini */}
       {/* Posisinya di luar <main> agar bisa "melayang" di atas segalanya */}
       {/* dengan posisi 'fixed' yang kita atur di dalam komponennya. */}
