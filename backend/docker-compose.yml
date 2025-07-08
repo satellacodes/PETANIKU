@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:13
+    container_name: petaniku_db
+    environment:
+      POSTGRES_USER: petaniku
+      POSTGRES_PASSWORD: petaniku123
+      POSTGRES_DB: petaniku
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: petaniku_backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: petaniku
+      DB_PASSWORD: petaniku123
+      DB_NAME: petaniku
+      JWT_SECRET: your_jwt_secret_here
+      JWT_EXPIRES_IN: 1h
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
+volumes:
+  pgdata:
