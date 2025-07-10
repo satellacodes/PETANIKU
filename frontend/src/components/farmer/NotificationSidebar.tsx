@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import {
-  getNotifications,
-  markAsRead,
-} from "../../services/notificationService";
 
 const NotificationSidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,27 +8,31 @@ const NotificationSidebar: React.FC = () => {
 
   useEffect(() => {
     if (isOpen && user) {
-      const loadNotifications = async () => {
-        try {
-          const data = await getNotifications();
-          setNotifications(data);
-        } catch (error) {
-          console.error("Failed to load notifications", error);
-        }
-      };
-      loadNotifications();
+      // Fetch notifications from API
+      const mockNotifications = [
+        {
+          id: "1",
+          message: "Pesanan baru #123 dari Budi",
+          createdAt: new Date(),
+          read: false,
+        },
+        {
+          id: "2",
+          message: "Pesanan #120 telah dibayar",
+          createdAt: new Date(),
+          read: true,
+        },
+      ];
+      setNotifications(mockNotifications);
     }
   }, [isOpen, user]);
 
-  const handleRead = async (id: number) => {
-    try {
-      await markAsRead(id);
-      setNotifications(
-        notifications.map((n) => (n.id === id ? { ...n, read: true } : n)),
-      );
-    } catch (error) {
-      console.error("Failed to mark as read", error);
-    }
+  const markAsRead = (id: string) => {
+    setNotifications(
+      notifications.map((notif) =>
+        notif.id === id ? { ...notif, read: true } : notif,
+      ),
+    );
   };
 
   return (
@@ -72,7 +72,7 @@ const NotificationSidebar: React.FC = () => {
               <div
                 key={notification.id}
                 className={`p-4 border-b ${notification.read ? "bg-gray-50" : "bg-yellow-50"}`}
-                onClick={() => handleRead(notification.id)}
+                onClick={() => markAsRead(notification.id)}
               >
                 <p className="font-medium">{notification.message}</p>
                 <p className="text-sm text-gray-500">

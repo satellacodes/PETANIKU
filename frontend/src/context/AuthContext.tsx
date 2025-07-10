@@ -4,15 +4,19 @@ import React, {
   useState,
   useEffect,
   ReactNode,
+  useCallback,
 } from "react";
-import { useNavigate } from "react-router-dom";
-import { loginUser, registerUser } from "../services/authService";
+import { loginUser, registerUser, getProfile } from "../services/authService";
+import api from "../services/api";
 
 interface AuthContextType {
   user: any;
   login: (email: string, password: string) => Promise<void>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
+  loading: boolean;
+  redirect: string | null; // Tambahkan ini
+  clearRedirect: () => void; // Tambahkan ini (opsional, untuk reset nilai)
 }
 
 interface RegisterData {
@@ -31,45 +35,79 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<any>(null);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [redirect, setRedirect] = useState<string | null>(null);
+  const clearRedirect = () => setRedirect(null);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+  const logout = useCallback(() => {
+    localStorage.removeItem("token");
+    setUser(null);
+    setRedirect("/login");
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string) => {
     try {
       const data = await loginUser(email, password);
-      setUser(data);
-      localStorage.setItem("user", JSON.stringify(data));
-      navigate("/");
+      setUser(data.user);
+      localStorage.setItem("token", data.token);
+      setRedirect("/");
     } catch (error: any) {
       throw new Error(error.response?.data?.message || "Login failed");
     }
-  };
+  }, []);
 
-  const register = async (data: RegisterData) => {
+  const register = useCallback(async (data: RegisterData) => {
     try {
       const response = await registerUser(data);
-      setUser(response);
-      localStorage.setItem("user", JSON.stringify(response));
-      navigate("/");
+      setUser(response.user);
+      localStorage.setItem("token", response.token);
+      setRedirect("/");
     } catch (error: any) {
       throw new Error(error.response?.data?.message || "Registration failed");
     }
-  };
+  }, []);
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
+  const refreshToken = useCallback(async () => {
+    try {
+      const response = await api.post("/auth/refresh");
+      localStorage.setItem("token", response.data.token);
+      return response.data.token;
+    } catch (error) {
+      logout();
+      return null;
+    }
+  }, [logout]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const userData = await getProfile();
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        register,
+        logout,
+        loading,
+        redirect,
+        clearRedirect,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
