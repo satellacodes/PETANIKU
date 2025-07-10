@@ -15,22 +15,22 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-4">Tautan</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <a href="/" className="text-gray-400 hover:text-white">
                   Beranda
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <a href="/" className="text-gray-400 hover:text-white">
                   Produk
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <a href="/" className="text-gray-400 hover:text-white">
                   Tentang Kami
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <a href="/" className="text-gray-400 hover:text-white">
                   Kontak
                 </a>
               </li>
@@ -40,22 +40,22 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-4">Kategori</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <a href="/" className="text-gray-400 hover:text-white">
                   Sayuran Organik
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <a href="/" className="text-gray-400 hover:text-white">
                   Sayuran Hidroponik
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <a href="/" className="text-gray-400 hover:text-white">
                   Sayuran Lokal
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <a href="/" className="text-gray-400 hover:text-white">
                   Sayuran Segar
                 </a>
               </li>

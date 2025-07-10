@@ -19,6 +19,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 function AppRouter() {
   const { redirect } = useAuth();
   const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const location = useLocation();
 
   useEffect(() => {

@@ -10,6 +10,7 @@ import { useAuth } from "../../context/AuthContext";
 const ProductForm: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",

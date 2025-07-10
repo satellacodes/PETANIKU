@@ -67,6 +67,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const refreshToken = useCallback(async () => {
     try {
       const response = await api.post("/auth/refresh");
