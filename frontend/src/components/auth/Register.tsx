@@ -202,6 +202,18 @@ const Register: React.FC = () => {
             )}
           </div>
 
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              <strong>Error!</strong> {error}
+            </div>
+          )}
+
+          {error?.includes("500") && (
+            <div className="mt-4 text-orange-600">
+              Server sedang mengalami masalah. Silakan coba lagi nanti.
+            </div>
+          )}
+
           <div>
             <button
               type="submit"
