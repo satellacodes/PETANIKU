@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Cart: React.FC = () => {
-  const [cartItems, setCartItems] = useState("");
+  const [cartItems, setCartItems] = useState([]);
 
   const updateQuantity = (id: string, quantity: number) => {
     if (quantity < 1) return;
