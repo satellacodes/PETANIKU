@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
   margin: 0;
   font-family:
@@ -9,6 +10,8 @@ body {
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 code {

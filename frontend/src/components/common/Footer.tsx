@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="/" className="text-gray-400 hover:text-white">
+                <a href="/about" className="text-gray-400 hover:text-white">
                   Tentang Kami
                 </a>
               </li>
@@ -78,7 +78,8 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
-          &copy; {new Date().getFullYear()} PETANIKU. Hak Cipta Dilindungi.
+          &copy; {new Date().getFullYear()} PETANIKU. Dibuat oleh Dimas, Hanif,
+          Azkal.
         </div>
       </div>
     </footer>
