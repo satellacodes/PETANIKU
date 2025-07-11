@@ -30,7 +30,7 @@ const FarmerProfile: React.FC = () => {
   if (loading) return <div>Loading...</div>;
   if (!farmer) return <div>Farmer not found</div>;
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 pt-24">
       <div className="bg-white shadow rounded-lg p-6 mb-8">
         <div className="flex flex-col md:flex-row items-center">
           <div className="bg-gray-200 border-2 border-dashed rounded-xl w-32 h-32 mb-4 md:mb-0 md:mr-6" />

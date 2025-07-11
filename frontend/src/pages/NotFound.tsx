@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const NotFound: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 pt-24">
       <h1 className="text-9xl font-bold text-gray-800">404</h1>
       <h2 className="text-2xl font-medium text-gray-600 mb-6">
         Halaman tidak ditemukan

@@ -7,7 +7,7 @@ const Profile: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 pt-24">
       <h1 className="text-3xl font-bold mb-6">Profil Saya</h1>
 
       <div className="bg-white shadow rounded-lg p-6 max-w-3xl">
