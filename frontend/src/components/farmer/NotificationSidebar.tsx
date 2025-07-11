@@ -12,7 +12,7 @@ const NotificationSidebar: React.FC = () => {
       const mockNotifications = [
         {
           id: "1",
-          message: "Pesanan baru #123 dari Budi",
+          message: "Pesanan baru #123 dari Ambarukmo",
           createdAt: new Date(),
           read: false,
         },

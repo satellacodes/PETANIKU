@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const ChatInterface: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
     { id: "1", text: "Halo, ada yang bisa saya bantu?", sender: "farmer" },

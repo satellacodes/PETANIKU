@@ -18,7 +18,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <main className="flex-grow">{children}</main>
       <Footer />
       {user && user.role === "farmer" && <NotificationSidebar />}
-      <ChatInterface />
+      {user && (user.role === "farmer") === "buyer" && <ChatInterface />}
     </div>
   );
 };
