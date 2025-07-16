@@ -33,7 +33,7 @@ const Register: React.FC<RegisterProps> = ({ onSwitch }) => {
         location,
         description,
       });
-      navigate("/");
+      window.location.reload();
     } catch (err) {
       setError("Gagal mendaftar. Silakan coba lagi.");
     } finally {

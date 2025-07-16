@@ -20,14 +20,13 @@ const Login: React.FC<LoginProps> = ({ onSwitch }) => {
     setIsLoading(true);
     try {
       await login(email, password);
-      navigate("/");
+      window.location.reload();
     } catch (err) {
       setError("Gagal masuk. Silakan periksa kredensial Anda.");
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
