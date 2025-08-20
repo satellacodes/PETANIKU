@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "http://8.215.100.141:4001/api/$1"
+      "dest": "http://localhost:4001/api/$1"
     },
     {
       "src": "/static/(.*)",
