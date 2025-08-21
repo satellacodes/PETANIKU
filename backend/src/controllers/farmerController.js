@@ -1,4 +1,4 @@
-const { Product, Order, Notification } = require("../models");
+const { Product, Order, Notification , Users } = require("../models");
 const upload = require("../utils/upload");
 
 exports.getMyProducts = async (req, res) => {
@@ -193,3 +193,66 @@ exports.markNotificationAsRead = async (req, res) => {
       });
   }
 };
+
+exports.getFarmerProfile = async (req, res) => {
+  try {
+    const farmerId = req.params.id;
+    const farmer = await User.findByPk(farmerId, {
+      attributes: ['id', 'name', 'email', 'phone', 'location', 'description'],
+      where: { role: 'farmer' }
+    });
+
+    if (!farmer) {
+      return res.status(404).json({ message: 'Farmer not found' });
+    }
+
+    res.json(farmer);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch farmer profile', error: error.message });
+  }
+};
+
+exports.getFarmerProducts = async (req, res) => {
+  try {
+    const farmerId = req.params.id;
+    const products = await Product.findAll({
+      where: { farmerId },
+      attributes: ['id', 'name', 'image', 'price', 'tags']
+    });
+
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch farmer products', error: error.message });
+  }
+};
+
+exports.updateProductStock = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { stock } = req.body; // Dapatkan nilai stok baru dari request body
+    const farmerId = req.user.id; // ID farmer dari token
+
+    const product = await Product.findOne({
+      where: { id, farmerId }
+    });
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    product.stock = stock;
+    await product.save();
+
+    res.json({
+      id: product.id,
+      name: product.name,
+      stock: product.stock,
+      message: "Stock updated successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to update stock",
+      error: error.message
+    });
+  }
+};
+

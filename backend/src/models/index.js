@@ -1,57 +1,32 @@
-const { Sequelize } = require("sequelize");
-const { sequelize } = require("../config/db");
-const User = require("./User");
-const Product = require("./Product");
-const Order = require("./Order");
-const Notification = require("./Notification");
+const { sequelize } = require('../config/db');
+const defineUser = require('./User');
+const defineProduct = require('./Product');
+const defineOrder = require('./Order');
+const defineNotification = require('./Notification');
 
-// Initialize models
-User.initModel(sequelize);
-Product.initModel(sequelize);
-Order.initModel(sequelize);
-Notification.initModel(sequelize);
+const User = defineUser(sequelize);
+const Product = defineProduct(sequelize);
+const Order = defineOrder(sequelize);
+const Notification = defineNotification(sequelize);
 
-// Define associations
-User.hasMany(Product, {
-  foreignKey: "farmerId",
-  as: "products",
-});
-Product.belongsTo(User, {
-  foreignKey: "farmerId",
-  as: "farmer",
-});
+const models = {
+  User,
+  Product,
+  Order,
+  Notification
+};
 
-User.hasMany(Order, {
-  foreignKey: "buyerId",
-  as: "buyerOrders",
-});
-Order.belongsTo(User, {
-  foreignKey: "buyerId",
-  as: "buyer",
+Object.keys(models).forEach(modelName => {
+  if (models[modelName].associate) {
+    models[modelName].associate(models);
+  }
 });
 
-User.hasMany(Order, {
-  foreignKey: "farmerId",
-  as: "farmerOrders",
-});
-Order.belongsTo(User, {
-  foreignKey: "farmerId",
-  as: "farmer",
-});
-
-User.hasMany(Notification, {
-  foreignKey: "userId",
-  as: "notifications",
-});
-Notification.belongsTo(User, {
-  foreignKey: "userId",
-  as: "user",
-});
 
 module.exports = {
   sequelize,
   User,
   Product,
   Order,
-  Notification,
+  Notification
 };

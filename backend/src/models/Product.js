@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Product = sequelize.define("Product", {
+  const Product = sequelize.define('Product', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -19,14 +19,29 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
-        min: 0,
-      },
+        min: 0
+      }
     },
     tags: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       defaultValue: [],
     },
+    stock: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      validate: {
+         min: 0
+        }
+      },
   });
+
+  Product.associate = (models) => {
+    Product.belongsTo(models.User, {
+      foreignKey: 'farmerId',
+      as: 'farmer'
+    });
+  };
+
 
   return Product;
 };

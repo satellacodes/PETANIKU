@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Notification = sequelize.define("Notification", {
+  const Notification = sequelize.define('Notification', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     type: {
-      type: DataTypes.ENUM("order", "chat"),
+      type: DataTypes.ENUM('order', 'chat'),
       allowNull: false,
     },
     read: {
@@ -24,6 +24,13 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
   });
+
+  Notification.associate = (models) => {
+    Notification.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'user'
+    });
+  };
 
   return Notification;
 };

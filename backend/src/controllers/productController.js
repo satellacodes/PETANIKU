@@ -1,30 +1,41 @@
-const Product = require("../models/Product");
-const User = require("../models/User");
+const { Product, User } = require("../models");
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const { location, tags, sort } = req.query;
-    let where = {};
-    let order = [];
+    const { location, tag, sort, search } = req.query;
+    const where = {};
+    const order = [];
+    const include = []; // Tambahkan inisialisasi include
 
-    if (location) where.location = location;
-    if (tags) where.tags = { [Op.contains]: [tags] };
+    if (location) where["$farmer.location$"] = location;
+    if (tag) where.tags = { [Op.contains]: [tag] };
+    if (search) where.name = { [Op.iLike]: `%${search}%` };
 
-    if (sort === "popular") order = [["sold", "DESC"]];
-    else if (sort === "lowest") order = [["price", "ASC"]];
-    else if (sort === "highest") order = [["price", "DESC"]];
+    if (sort === "popular") order.push(["sold", "DESC"]);
+    else if (sort === "lowest") order.push(["price", "ASC"]);
+    else if (sort === "highest") order.push(["price", "DESC"]);
+    else if (sort === "newest") order.push(["createdAt", "DESC"]);
+    else if (sort === "oldest") order.push(["createdAt", "ASC"]);
+
+    include.push({
+      model: User,
+      as: "farmer",
+      attributes: ["id", "name", "location"],
+      where: { role: "farmer" }
+    });
 
     const products = await Product.findAll({
       where,
       order,
-      include: [
-        { model: User, as: "farmer", attributes: ["id", "name", "location"] },
-      ],
+      include
     });
 
     res.json(products);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ 
+      message: "Failed to fetch products", 
+      error: error.message 
+    });
   }
 };
 

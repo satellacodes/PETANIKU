@@ -43,8 +43,8 @@ exports.createOrder = async (req, res) => {
     const { items } = req.body;
     const buyerId = req.user.id;
 
-    if (!items || items.length === 0) {
-      return res.status(400).json({ message: "Order items are required" });
+    if (items.some(item => item.quantity <= 0)) {
+      return res.status(400).json({ message: "Invalid quantity" });
     }
 
     // Calculate total and validate products
@@ -89,6 +89,15 @@ exports.createOrder = async (req, res) => {
       message: `New order from ${buyer.name} for Rp${total.toLocaleString()}`,
       type: "order",
       referenceId: order.id,
+    });
+     const wss = req.app.get('wss');
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN && client.userId === farmerId) {
+        client.send(JSON.stringify({
+          type: 'notification',
+          data: notification
+        }));
+      }
     });
 
     // Emit real-time notification (to be implemented with WebSocket)

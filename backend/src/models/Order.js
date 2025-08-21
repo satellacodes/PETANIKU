@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Order = sequelize.define("Order", {
+  const Order = sequelize.define('Order', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -16,10 +16,21 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("pending", "accepted", "rejected"),
-      defaultValue: "pending",
+      type: DataTypes.ENUM('pending', 'accepted', 'rejected'),
+      defaultValue: 'pending',
     },
   });
+
+  Order.associate = (models) => {
+    Order.belongsTo(models.User, {
+      foreignKey: 'buyerId',
+      as: 'buyer'
+    });
+    Order.belongsTo(models.User, {
+      foreignKey: 'farmerId',
+      as: 'farmer'
+    });
+  };
 
   return Order;
 };
