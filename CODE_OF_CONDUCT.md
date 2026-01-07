@@ -62,7 +62,7 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ## Reporting Guidelines
 
-If you experience or witness unacceptable behavior—or have any other concerns—please report it by contacting the project team at **conduct@petaniku.id**. All reports will be handled with discretion.
+If you experience or witness unacceptable behavior—or have any other concerns—please report it by contacting the project team at **dimasarisp52@gmail.com**. All reports will be handled with discretion.
 
 In your report, please include:
 
