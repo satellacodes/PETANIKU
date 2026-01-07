@@ -195,7 +195,7 @@ We welcome contributions! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for a
 
 ## 🐛 Reporting Bugs
 
-If you find a bug, please open an [issue](https://github.com/username/petaniku/issues) with the provided template.
+If you find a bug, please open an [issue](https://github.com/satellacodes/petaniku/issues) with the provided template.
 
 ## 📄 License
 
