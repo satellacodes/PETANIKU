@@ -1,7 +1,9 @@
 frontend/node_modules
+frontend/semua_kode.txt
 backend/node_modules
 frontend/.env
 backend/.env
 backend.zip
 backend/docker-compose.yml
 backend/src/config/database.json
+.DS_Store
