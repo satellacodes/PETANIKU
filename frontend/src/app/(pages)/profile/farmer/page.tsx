@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ProductCard from "../components/buyer/ProductCard";
+import { useParams } from "next/navigation";
+import ProductCard from "@/components/buyer/ProductCard";
 import {
   fetchFarmerProfile,
   fetchFarmerProducts,
-} from "../services/authService";
+} from "@/services/authService";
 const FarmerProfile: React.FC = () => {
   const { id } = useParams();
   const [farmer, setFarmer] = useState<any>(null);
