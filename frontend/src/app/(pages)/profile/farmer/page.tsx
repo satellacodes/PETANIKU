@@ -8,17 +8,25 @@ import {
   fetchFarmerProducts,
 } from "@/services/authService";
 const FarmerProfile: React.FC = () => {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params?.id;
   const [farmer, setFarmer] = useState<any>(null);
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    if (!id || Array.isArray(id)) {
+      setLoading(false);
+      return;
+    }
+
     const loadData = async () => {
       try {
         const [farmerData, productsData] = await Promise.all([
-          fetchFarmerProfile(id!),
-          fetchFarmerProducts(id!),
+          fetchFarmerProfile(id),
+          fetchFarmerProducts(id),
         ]);
+
         setFarmer(farmerData);
         setProducts(productsData);
       } catch (error) {
@@ -27,8 +35,10 @@ const FarmerProfile: React.FC = () => {
         setLoading(false);
       }
     };
+
     loadData();
   }, [id]);
+
   if (loading) return <div>Loading...</div>;
   if (!farmer) return <div>Farmer not found</div>;
   return (
