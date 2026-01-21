@@ -6,7 +6,7 @@
 
 **Petaniku** is an innovative web platform that directly connects buyers with farmers, eliminating intermediaries in the agricultural supply chain. This platform enables more transparent transactions, fairer prices, and closer relationships between consumers and producers.
 
-**Status:** 🚧 Under Development (Beta)
+**Status:** 🚧 Under Development (Beta) & Migrate to nextjs
 
 ## ✨ Key Features
 
@@ -34,6 +34,7 @@
 
 ### Frontend
 
+- **NextJs** - JavaScript Framework
 - **React** - JavaScript library for UI
 - **TypeScript** - Type safety and developer experience
 - **Tailwind CSS** - Utility-first CSS framework
