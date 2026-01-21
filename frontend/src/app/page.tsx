@@ -1,8 +1,10 @@
+"use client";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
+import Typewriter from "typewriter-effect";
 
 const Home: React.FC = () => {
   const { user } = useAuth();
@@ -35,7 +37,7 @@ const Home: React.FC = () => {
     // Rotate background images
     const imageInterval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000);
+    }, 20000);
 
     return () => {
       clearTimeout(timer);
@@ -85,49 +87,29 @@ const Home: React.FC = () => {
             >
               Selamat Datang di PETANIKU
             </motion.h1>
-            <motion.p
+            {/* <motion.p
               className="text-xl mb-8 opacity-90"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.9 }}
               transition={{ delay: 1, duration: 0.8 }}
             >
               Platform jual beli sayuran segar langsung dari petani lokal
-            </motion.p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              {user ? (
-                <Link
-                  to="/products"
-                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg hover:shadow-xl transition-all"
-                >
-                  Belanja Sekarang
-                </Link>
-              ) : (
-                <>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Link
-                      to="/login"
-                      className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg hover:shadow-xl transition-all"
-                    >
-                      Masuk
-                    </Link>
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Link
-                      to="/register"
-                      className="bg-white hover:bg-gray-100 text-green-600 font-bold py-3 px-6 rounded-full text-lg shadow-lg hover:shadow-xl transition-all"
-                    >
-                      Daftar
-                    </Link>
-                  </motion.div>
-                </>
-              )}
-            </div>
+            </motion.p>  */}
+            <span className="text-xl mb-8 opacity-80 text-primary">
+              <Typewriter
+                options={{
+                  strings: [
+                    " Platform jual beli sayuran segar langsung dari petani lokal",
+                    "petani jawa tengah",
+                    "daftar gratis",
+                    "gratis doa",
+                    "bumbu kacang khas kebumen",
+                  ],
+                  autoStart: true,
+                  loop: true,
+                }}
+              />
+            </span>
           </motion.div>
         </div>
 
@@ -244,7 +226,7 @@ const Home: React.FC = () => {
                     Rp {veg.price.toLocaleString()}
                   </p>
                   <Link
-                    to={user ? `/products/${veg.id}` : "/login"}
+                    href={user ? `/products/${veg.id}` : "/login"}
                     className="mt-4 inline-block w-full text-center bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg transition-colors"
                   >
                     Lihat Detail

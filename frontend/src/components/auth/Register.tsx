@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 
@@ -15,32 +17,41 @@ const Register: React.FC<RegisterProps> = ({ onSwitch }) => {
   const [role, setRole] = useState<"buyer" | "farmer">("buyer");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
+
+  const { register } = useAuth();
+  const router = useRouter();
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { register } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
+
     try {
-      await register({
+      const user = await register(
         name,
         email,
         phone,
-        password,
+        passowrd,
         role,
         location,
         description,
-      });
-      window.location.reload();
-    } catch (err) {
+      );
+
+      // 🎯 REDIRECT BERDASARKAN ROLE
+      if (user.role === "farmer") {
+        router.replace("/farmer/dashboard");
+      } else {
+        router.replace("/profile");
+      }
+    } catch {
       setError("Gagal mendaftar. Silakan coba lagi.");
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -334,18 +345,6 @@ const Register: React.FC<RegisterProps> = ({ onSwitch }) => {
           </button>
         </motion.div>
       </form>
-
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600">
-          Sudah punya akun?{" "}
-          <button
-            onClick={onSwitch}
-            className="font-medium text-emerald-600 hover:text-emerald-500"
-          >
-            Masuk disini
-          </button>
-        </p>
-      </div>
     </motion.div>
   );
 };

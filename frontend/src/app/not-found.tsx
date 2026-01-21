@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 const NotFound: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 pt-24">
@@ -11,7 +11,7 @@ const NotFound: React.FC = () => {
         Maaf, halaman yang Anda cari tidak ada.
       </p>
       <Link
-        to="/"
+        href="/"
         className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700"
       >
         Kembali ke Beranda

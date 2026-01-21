@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 
@@ -13,16 +15,24 @@ const Login: React.FC<LoginProps> = ({ onSwitch }) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
+
     try {
-      await login(email, password);
-      window.location.reload();
-    } catch (err) {
-      setError("Gagal masuk. Silakan periksa kredensial Anda.");
+      const user = await login(email, password);
+
+      // 🎯 REDIRECT BERDASARKAN ROLE
+      if (user.role === "farmer") {
+        router.replace("/farmer/dashboard");
+      } else {
+        router.replace("/profile"); // atau /buyer/dashboard
+      }
+    } catch {
+      setError("Gagal masuk. Periksa email dan password.");
     } finally {
       setIsLoading(false);
     }
@@ -187,19 +197,6 @@ const Login: React.FC<LoginProps> = ({ onSwitch }) => {
           </button>
         </motion.div>
       </form>
-
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600">
-          Belum punya akun?{" "}
-          <button
-            type="button"
-            onClick={onSwitch}
-            className="font-medium text-emerald-600 hover:text-emerald-500"
-          >
-            Daftar sekarang
-          </button>
-        </p>
-      </div>
     </motion.div>
   );
 };

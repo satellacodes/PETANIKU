@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import NotificationSidebar from "./NotificationSidebar";
 import { fetchProducts } from "../../services/productService";
 import { fetchOrders } from "../../services/orderService";

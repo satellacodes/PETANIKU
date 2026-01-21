@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: {
@@ -19,7 +19,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-200 hover:shadow-lg hover:-translate-y-1">
-      <Link to={`/product/${product.id}`}>
+      <Link href={`/product/${product.id}`}>
         <div className="aspect-w-16 aspect-h-9">
           <img
             src={product.image}

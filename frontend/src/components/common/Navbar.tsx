@@ -1,5 +1,7 @@
+"use client";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 
@@ -8,7 +10,7 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Efek scroll untuk mengubah tampilan navbar
   useEffect(() => {
@@ -27,7 +29,7 @@ const Navbar: React.FC = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      navigate(`/products?search=${searchTerm.trim()}`);
+      router.push(`/products?search=${searchTerm.trim()}`);
     }
   };
 
@@ -69,7 +71,7 @@ const Navbar: React.FC = () => {
             className="flex items-center"
             whileHover={{ scale: 1.05 }}
           >
-            <Link to="/" className="flex items-center">
+            <Link href="/" className="flex items-center">
               <motion.div
                 className="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-2 shadow-md"
                 animate={{ rotate: [0, 15, 0] }}
@@ -138,7 +140,7 @@ const Navbar: React.FC = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                to="/about"
+                href="/about"
                 className={`font-medium transition-colors ${
                   scrolled
                     ? "text-emerald-600 hover:text-emerald-800"
@@ -217,7 +219,7 @@ const Navbar: React.FC = () => {
                     >
                       <motion.div variants={itemVariants}>
                         <Link
-                          to={
+                          href={
                             user.role === "farmer"
                               ? "/farmer/dashboard"
                               : "/profile"
@@ -232,7 +234,7 @@ const Navbar: React.FC = () => {
 
                       <motion.div variants={itemVariants}>
                         <Link
-                          to="/cart"
+                          href="/cart"
                           className="flex items-center px-4 py-3 hover:bg-emerald-50 transition-colors"
                           onClick={() => setIsMenuOpen(false)}
                         >
@@ -266,7 +268,7 @@ const Navbar: React.FC = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Link
-                    to="/login"
+                    href="/login"
                     className={`px-4 py-2 rounded-full font-medium transition-colors ${
                       scrolled
                         ? "text-emerald-600 hover:text-emerald-800"
@@ -281,7 +283,7 @@ const Navbar: React.FC = () => {
                   whileTap={{ scale: 0.9 }}
                 >
                   <Link
-                    to="/register"
+                    href="/register"
                     className="px-4 py-2 bg-white text-emerald-600 font-medium rounded-full shadow-md hover:bg-emerald-50 transition-colors"
                   >
                     Register

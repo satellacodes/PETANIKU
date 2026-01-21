@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-import ProductCard from "../components/buyer/ProductCard";
-import { fetchProducts } from "../services/productService";
+import { useAuth } from "@/context/AuthContext";
+import ProductCard from "@/components/buyer/ProductCard";
+import { fetchProducts } from "@/services/productService";
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<any[]>([]);

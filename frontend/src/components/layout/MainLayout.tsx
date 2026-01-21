@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Navbar from "../common/Navbar";
 import Footer from "../common/Footer";
@@ -17,8 +19,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Navbar />
       <main className="flex-grow">{children}</main>
       <Footer />
-      {user && user.role === "farmer" && <NotificationSidebar />}
-      {user && (user.role === "farmer") === "buyer" && <ChatInterface />}
+      {user?.role === "farmer" && <NotificationSidebar />}
+      {user?.role === "buyer" && <ChatInterface />}
     </div>
   );
 };

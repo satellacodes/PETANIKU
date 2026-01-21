@@ -12,38 +12,23 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "axios": "^1.6.8",
+    "clsx": "^2.1.1",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
     "framer": "^2.4.1",
     "motion": "^12.23.3",
+    "next": "^14.2.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "tailwind-merge": "^2.6.0",
+    "typescript": "^5.9.3",
+    "typewriter-effect": "^2.22.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",

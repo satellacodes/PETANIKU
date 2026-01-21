@@ -2,6 +2,8 @@ frontend/node_modules
 frontend/semua_kode.txt
 backend/node_modules
 frontend/.env
+frontend/.next
+frontend/build
 backend/.env
 backend.zip
 backend/docker-compose.yml

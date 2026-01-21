@@ -1,7 +1,11 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { fetchProductById } from "../services/productService";
-import { useAuth } from "../context/AuthContext";
+import { useParams } from "next/navigation";
+import { fetchProductById } from "@/services/productService";
+import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
+
 const ProductDetail: React.FC = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<any>(null);
@@ -32,7 +36,7 @@ const ProductDetail: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <img
+            <Image
               src={product.image}
               alt={product.name}
               className="w-full h-96 object-contain"

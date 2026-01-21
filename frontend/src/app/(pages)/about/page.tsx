@@ -1,33 +1,38 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import Image from "next/image";
 
-const AboutPage = () => {
+const about = () => {
   const [showEffect, setShowEffect] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
+  interface teamProps {
+    name: string;
+    role: string;
+    image: string;
+    description: string;
+  }
 
   // Data tim
-  const teamMembers = [
+  const teamMembers: teamProps[] = [
     {
       name: "Dimas Aris Pangestu",
       role: "Hacker baik",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+      image: "/assets/person.png",
       description:
         "heh mangan rawon mung sepuluh ewu, mawurah cikk (suara pipa jatuh)",
     },
     {
       name: "Muhammad Azkal Azkiya",
       role: "Hacker jahat",
-      image:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+      image: "/assets/person.png",
       description: "Ahli nya ahli core of the core",
     },
     {
       name: "Hanif Roihan",
       role: "CEO",
-      image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+      image: "/assets/person.png",
       description: "Pencetus dan memberi ide serta gagasan PETANIKU",
     },
   ];
@@ -157,10 +162,12 @@ const AboutPage = () => {
                 <div className="p-6">
                   <div className="flex justify-center mb-4">
                     <div className="relative">
-                      <img
+                      <Image
                         src={member.image}
                         alt={member.name}
-                        className="w-32 h-32 rounded-full object-cover border-4 border-green-100"
+                        width={128}
+                        height={128}
+                        className=" rounded-full object-cover border-4 border-green-100"
                       />
                       <div className="absolute inset-0 rounded-full border-4 border-transparent animate-ping opacity-75"></div>
                     </div>
@@ -347,4 +354,4 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default about;

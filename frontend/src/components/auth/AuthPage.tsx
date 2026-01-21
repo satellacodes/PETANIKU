@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Login from "./Login";
@@ -11,7 +13,6 @@ const AuthPage: React.FC<AuthPageProps> = ({ initialMode }) => {
   const [isLogin, setIsLogin] = useState(initialMode === "login");
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Pastikan mode sesuai dengan prop yang diberikan
   useEffect(() => {
     setIsLogin(initialMode === "login");
   }, [initialMode]);
@@ -19,7 +20,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ initialMode }) => {
   const handleSwitch = () => {
     if (isAnimating) return;
     setIsAnimating(true);
-    setIsLogin(!isLogin);
+    setIsLogin((prev) => !prev);
   };
 
   return (
@@ -32,18 +33,9 @@ const AuthPage: React.FC<AuthPageProps> = ({ initialMode }) => {
           <motion.div
             key={isLogin ? "login" : "register"}
             initial={{ rotateY: 90, opacity: 0 }}
-            animate={{
-              rotateY: 0,
-              opacity: 1,
-            }}
-            exit={{
-              rotateY: -90,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.5,
-              ease: "easeInOut",
-            }}
+            animate={{ rotateY: 0, opacity: 1 }}
+            exit={{ rotateY: -90, opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
             className="bg-white rounded-2xl shadow-xl overflow-hidden"
             style={{
               transformStyle: "preserve-3d",
@@ -66,18 +58,16 @@ const AuthPage: React.FC<AuthPageProps> = ({ initialMode }) => {
           className="mt-6 text-center text-gray-600"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.4 }}
         >
           {isLogin ? "Belum punya akun?" : "Sudah punya akun?"}{" "}
-          <motion.button
+          <button
             onClick={handleSwitch}
-            className="font-medium text-emerald-600 hover:text-emerald-800"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             disabled={isAnimating}
+            className="font-medium text-emerald-600 hover:text-emerald-800"
           >
             {isLogin ? "Daftar disini" : "Masuk disini"}
-          </motion.button>
+          </button>
         </motion.div>
       </div>
     </div>
