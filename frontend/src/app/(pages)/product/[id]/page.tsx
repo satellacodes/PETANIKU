@@ -7,15 +7,18 @@ import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 
 const ProductDetail: React.FC = () => {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params?.id;
   const [product, setProduct] = useState<any>(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   useEffect(() => {
+    if (!id || Array.isArray(id)) return;
+
     const loadProduct = async () => {
       try {
-        const data = await fetchProductById(id!);
+        const data = await fetchProductById(id);
         setProduct(data);
       } catch (error) {
         console.error("Failed to load product", error);
@@ -23,6 +26,7 @@ const ProductDetail: React.FC = () => {
         setLoading(false);
       }
     };
+
     loadProduct();
   }, [id]);
   const handleAddToCart = () => {
