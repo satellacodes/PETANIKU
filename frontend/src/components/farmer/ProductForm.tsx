@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useRouter, useParams } from "next/navigation";
 import {
   fetchProductById,
   createProduct,
@@ -8,52 +10,57 @@ import {
 import { useAuth } from "../../context/AuthContext";
 
 const ProductForm: React.FC = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const params = useParams();
+  const id = params?.id as string | undefined;
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user } = useAuth();
+
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     tags: "",
     image: null as File | null,
   });
+
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (id) {
-      const loadProduct = async () => {
-        try {
-          const product = await fetchProductById(id);
-          setFormData({
-            name: product.name,
-            price: product.price.toString(),
-            tags: product.tags.join(","),
-            image: null,
-          });
-        } catch (error) {
-          console.error("Failed to load product", error);
-        }
-      };
-      loadProduct();
-    }
+    if (!id) return;
+
+    const loadProduct = async () => {
+      try {
+        const product = await fetchProductById(id);
+        setFormData({
+          name: product.name,
+          price: product.price.toString(),
+          tags: product.tags.join(","),
+          image: null,
+        });
+      } catch (err) {
+        console.error("Failed to load product", err);
+      }
+    };
+
+    loadProduct();
   }, [id]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setFormData({ ...formData, image: file });
-      setPreview(URL.createObjectURL(file));
-    }
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setFormData((prev) => ({ ...prev, image: file }));
+    setPreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -73,9 +80,10 @@ const ProductForm: React.FC = () => {
       } else {
         await createProduct(productData);
       }
-      navigate("/farmer/dashboard");
-    } catch (error: any) {
-      setError(error.message || "Failed to save product");
+
+      router.push("/farmer/dashboard");
+    } catch (err: any) {
+      setError(err?.message || "Failed to save product");
     } finally {
       setIsLoading(false);
     }
@@ -93,36 +101,32 @@ const ProductForm: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="max-w-2xl">
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Nama Produk
-          </label>
+          <label className="block text-sm font-medium mb-1">Nama Produk</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border rounded-md"
             required
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Harga (Rp)
-          </label>
+          <label className="block text-sm font-medium mb-1">Harga (Rp)</label>
           <input
             type="number"
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
-            required
+            className="w-full p-2 border rounded-md"
             min="0"
+            required
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium mb-1">
             Tags (pisahkan dengan koma)
           </label>
           <input
@@ -130,33 +134,28 @@ const ProductForm: React.FC = () => {
             name="tags"
             value={formData.tags}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
-            placeholder="Contoh: organik, segar, lokal"
+            className="w-full p-2 border rounded-md"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Gambar Produk (max 3MB)
+          <label className="block text-sm font-medium mb-1">
+            Gambar Produk
           </label>
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border rounded-md"
             required={!id}
           />
-          {preview && (
-            <div className="mt-2">
-              <img src={preview} alt="Preview" className="max-w-xs max-h-48" />
-            </div>
-          )}
+          {preview && <img src={preview} className="mt-2 max-w-xs max-h-48" />}
         </div>
 
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:bg-gray-400"
+          className="bg-green-600 text-white py-2 px-4 rounded-md disabled:bg-gray-400"
         >
           {isLoading ? "Menyimpan..." : "Simpan Produk"}
         </button>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
@@ -14,7 +14,7 @@ const Login: React.FC<LoginProps> = ({ onSwitch }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -23,20 +23,23 @@ const Login: React.FC<LoginProps> = ({ onSwitch }) => {
     setIsLoading(true);
 
     try {
-      const user = await login(email, password);
-
-      // 🎯 REDIRECT BERDASARKAN ROLE
-      if (user.role === "farmer") {
-        router.replace("/farmer/dashboard");
-      } else {
-        router.replace("/profile"); // atau /buyer/dashboard
-      }
+      await login(email, password);
     } catch {
       setError("Gagal masuk. Periksa email dan password.");
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!user) return;
+
+    if (user.role === "farmer") {
+      router.replace("/farmer/dashboard");
+    } else {
+      router.replace("/profile");
+    }
+  }, [user]);
   return (
     <motion.div
       initial={{ opacity: 0 }}

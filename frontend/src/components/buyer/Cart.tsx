@@ -1,13 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+
+interface CartItem {
+  id: string;
+  name: string;
+  farmer: string;
+  price: number;
+  quantity: number;
+}
 
 const Cart: React.FC = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const updateQuantity = (id: string, quantity: number) => {
     if (quantity < 1) return;
-    setCartItems(
-      cartItems.map((item) => (item.id === id ? { ...item, quantity } : item)),
+    setCartItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item)),
     );
   };
 
@@ -29,7 +37,7 @@ const Cart: React.FC = () => {
           <h2 className="text-xl font-semibold mb-4">
             Keranjang belanja Anda kosong
           </h2>
-          <Link to="/products" className="text-green-600 hover:underline">
+          <Link href="/products" className="text-green-600 hover:underline">
             Mulai berbelanja
           </Link>
         </div>
@@ -99,7 +107,7 @@ const Cart: React.FC = () => {
                   <span>Rp{(subtotal + 10000).toLocaleString()}</span>
                 </div>
                 <Link
-                  to="/checkout"
+                  href="/checkout"
                   className="block mt-6 w-full bg-green-600 text-white text-center py-2 rounded-md hover:bg-green-700"
                 >
                   Lanjut ke Pembayaran

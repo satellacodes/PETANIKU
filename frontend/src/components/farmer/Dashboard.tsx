@@ -38,7 +38,7 @@ const FarmerDashboard: React.FC = () => {
         <h1 className="text-3xl font-bold">Dashboard Petani</h1>
         <div className="flex space-x-4">
           <Link
-            to="/farmer/products/new"
+            href="/farmer/products/new"
             className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
           >
             Tambah Produk
@@ -55,7 +55,7 @@ const FarmerDashboard: React.FC = () => {
               <div className="p-6 text-center">
                 <p className="text-gray-500">Belum ada produk</p>
                 <Link
-                  to="/farmer/products/new"
+                  href="/farmer/products/new"
                   className="text-green-600 hover:underline"
                 >
                   Tambah produk pertama
@@ -75,7 +75,7 @@ const FarmerDashboard: React.FC = () => {
                       </p>
                     </div>
                     <Link
-                      to={`/farmer/products/edit/${product.id}`}
+                      href={`/farmer/products/edit/${product.id}`}
                       className="text-blue-600 hover:text-blue-800"
                     >
                       Edit

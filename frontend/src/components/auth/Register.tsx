@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
@@ -18,7 +18,7 @@ const Register: React.FC<RegisterProps> = ({ onSwitch }) => {
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
 
-  const { register } = useAuth();
+  const { register, user } = useAuth();
   const router = useRouter();
 
   const [error, setError] = useState("");
@@ -30,28 +30,32 @@ const Register: React.FC<RegisterProps> = ({ onSwitch }) => {
     setIsLoading(true);
 
     try {
-      const user = await register(
+      await register({
         name,
         email,
         phone,
-        passowrd,
+        password,
         role,
         location,
         description,
-      );
-
-      // 🎯 REDIRECT BERDASARKAN ROLE
-      if (user.role === "farmer") {
-        router.replace("/farmer/dashboard");
-      } else {
-        router.replace("/profile");
-      }
+      });
     } catch {
       setError("Gagal mendaftar. Silakan coba lagi.");
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!user) return;
+
+    if (user.role === "farmer") {
+      router.replace("/farmer/dashboard");
+    } else {
+      router.replace("/profile");
+    }
+  }, [user, router]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
