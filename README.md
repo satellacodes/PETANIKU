@@ -103,7 +103,7 @@ docker-compose up --build
 Application will be available at:
 
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+- Backend API: http://localhost:4001
 - Database: PostgreSQL on port 5432
 
 ## 📁 Project Structure
