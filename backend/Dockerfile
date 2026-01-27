@@ -1,6 +1,6 @@
-FROM node:16.20.2
+FROM node:18-alpine
 
-RUN apt-get update && apt-get install -y postgresql-client
+RUN apk update && apk add  postgresql-client
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ COPY package*.json ./
 
 RUN npm install --include=dev
 RUN npm install -g nodemon 
-RUN npm install -g sequelize
+RUN npm install -g sequelize-cli
 
 COPY . .
 
